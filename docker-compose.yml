@@ -1,6 +1,18 @@
 version: '3'
 
 services:
+  https-portal:
+    image: steveltn/https-portal:1
+    ports:
+      - '80:80'
+      - '443:443'
+    links:
+      - wordpress
+    restart: always
+    environment:
+      DOMAINS: '${TAG} -> http://wordpress'
+      STAGE: 'production'
+      FORCE_RENEW: 'true'
   wordpress:
     image: wordpress:latest
     links:
